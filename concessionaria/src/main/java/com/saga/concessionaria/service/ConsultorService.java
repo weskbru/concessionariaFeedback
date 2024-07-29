@@ -1,18 +1,14 @@
 package com.saga.concessionaria.service;
 
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 import com.saga.concessionaria.model.Consultor;
 
-
-@Service
-public interface ConsultorService  {
-	
-	Consultor salvarConsultor(Consultor consultor);
-	
-	List<Consultor> listaConsultores();
-	boolean cpfExiste(String cpf);
+public interface ConsultorService {
+    Consultor salvarConsultor(Consultor consultor);
+    
+    boolean cpfExiste(String cpf);
+    Optional<Consultor> findByCpf(String cpf);
+    Optional<Consultor> findByCpfAndSenha(String cpf, String senha);
+    
 }
