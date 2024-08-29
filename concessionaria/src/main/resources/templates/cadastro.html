@@ -40,7 +40,10 @@
                                     <!-- Formulário de cadastro -->
                                     <form id="formCadastro" th:action="@{/cadastro}" th:object="${consultor}" method="POST" enctype="application/x-www-form-urlencoded">
                                         <!-- Mensagem de erro -->
-                                        <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
+                                        <div id="errorMessage" class="alert alert-danger d-none" role="alert" th:if="${erro != null}" th:text="${erro}">
+											O CPF já está cadastrado. Por favor, verifique e tente novamente.
+										</div>
+                                        <!-- Fim da Mensagem de Erro -->
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
@@ -79,7 +82,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <!-- Fim -->
+                                    <!-- Fim do Formulário -->
                                 </div>
                                 <div class="card-footer text-center py-3">
                                     <div class="small"><a href="login.html">Já tem uma conta? Vá para o login</a></div>
@@ -92,94 +95,93 @@
         </div>
     </div>
     <script>
-		document.addEventListener('DOMContentLoaded', function() {
-		    const form = document.getElementById('formCadastro');
-		    const senha = document.getElementById('inputPassword');
-		    const confirmaSenha = document.getElementById('inputPasswordConfirm');
-		    const cpf = document.getElementById('inputcpf');
-		    const errorMessage = document.getElementById('errorMessage');
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('formCadastro');
+            const senha = document.getElementById('inputPassword');
+            const confirmaSenha = document.getElementById('inputPasswordConfirm');
+            const cpf = document.getElementById('inputcpf');
+            const errorMessage = document.getElementById('errorMessage');
 
-		    form.addEventListener('submit', function(event) {
-		        // Limpa mensagens de erro
-		        errorMessage.classList.add('d-none');
+            form.addEventListener('submit', function(event) {
+                // Limpa mensagens de erro
+                errorMessage.classList.add('d-none');
 
-		        // Verificação de Senhas Correspondentes
-		        if (senha.value !== confirmaSenha.value) {
-		            displayError('As senhas não coincidem. Por favor, verifique e tente novamente.');
-		            event.preventDefault();
-		            return;
-		        }
+                // Verificação de Senhas Correspondentes
+                if (senha.value !== confirmaSenha.value) {
+                    displayError('As senhas não coincidem. Por favor, verifique e tente novamente.');
+                    event.preventDefault();
+                    return;
+                }
 
-		        // Validação do CPF
-		        const cpfValue = cpf.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                // Validação do CPF
+                const cpfValue = cpf.value.replace(/\D/g, ''); // Remove caracteres não numéricos
 
-		        if (!isValidCPF(cpfValue)) {
-		            displayError('O CPF é inválido. Verifique e tente novamente.');
-		            event.preventDefault();
-		            return;
-		        }
+                if (!isValidCPF(cpfValue)) {
+                    displayError('O CPF é inválido. Verifique e tente novamente.');
+                    event.preventDefault();
+                    return;
+                }
 
-		        // Validação da Senha
-		        if (!isValidPassword(senha.value)) {
-		            displayError('A senha deve ter pelo menos 6 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais.');
-		            event.preventDefault();
-		            return;
-		        }
-		    });
+                // Validação da Senha
+                if (!isValidPassword(senha.value)) {
+                    displayError('A senha deve ter pelo menos 6 caracteres, incluindo maiúsculas, minúsculas, números e caracteres especiais.');
+                    event.preventDefault();
+                    return;
+                }
+            });
 
-		    // Função para exibir mensagem de erro com animação
-		    function displayError(message) {
-		        errorMessage.textContent = message;
-		        errorMessage.classList.remove('d-none');
-		        errorMessage.classList.remove('shake'); // Remove a classe de animação para re-aplicar
-		        void errorMessage.offsetWidth; // Força a refluência do layout
-		        errorMessage.classList.add('shake'); // Adiciona a classe de animação
-		    }
+            // Função para exibir mensagem de erro com animação
+            function displayError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('d-none');
+                errorMessage.classList.remove('shake'); // Remove a classe de animação para re-aplicar
+                void errorMessage.offsetWidth; // Força a refluência do layout
+                errorMessage.classList.add('shake'); // Adiciona a classe de animação
+            }
 
-		    // Prevenir entrada de letras no campo CPF
-		    cpf.addEventListener('input', function() {
-		        cpf.value = cpf.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
-		    });
+            // Prevenir entrada de letras no campo CPF
+            cpf.addEventListener('input', function() {
+                cpf.value = cpf.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
+            });
 
-		    /* Função para validar CPF
-		    function isValidCPF(cpf) {
-		        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false; // Verifica se todos os dígitos são iguais
+            // Função para validar CPF
+            function isValidCPF(cpf) {
+                if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false; // Verifica se todos os dígitos são iguais
 
-		        let sum = 0;
-		        let remainder;
+                let sum = 0;
+                let remainder;
 
-		        // Validação do 1º dígito verificador
-		        for (let i = 0; i < 9; i++) {
-		            sum += parseInt(cpf.charAt(i)) * (10 - i);
-		        }
-		        remainder = (sum * 10) % 11;
-		        remainder = (remainder === 10 || remainder === 11) ? 0 : remainder;
-		        if (remainder !== parseInt(cpf.charAt(9))) return false;
+                // Validação do 1º dígito verificador
+                for (let i = 0; i < 9; i++) {
+                    sum += parseInt(cpf.charAt(i)) * (10 - i);
+                }
+                remainder = (sum * 10) % 11;
+                remainder = (remainder === 10 || remainder === 11) ? 0 : remainder;
+                if (remainder !== parseInt(cpf.charAt(9))) return false;
 
-		        // Validação do 2º dígito verificador
-		        sum = 0;
-		        for (let i = 0; i < 10; i++) {
-		            sum += parseInt(cpf.charAt(i)) * (11 - i);
-		        }
-		        remainder = (sum * 10) % 11;
-		        remainder = (remainder === 10 || remainder === 11) ? 0 : remainder;
-		        if (remainder !== parseInt(cpf.charAt(10))) return false;
+                // Validação do 2º dígito verificador
+                sum = 0;
+                for (let i = 0; i < 10; i++) {
+                    sum += parseInt(cpf.charAt(i)) * (11 - i);
+                }
+                remainder = (sum * 10) % 11;
+                remainder = (remainder === 10 || remainder === 11) ? 0 : remainder;
+                if (remainder !== parseInt(cpf.charAt(10))) return false;
 
-		        return true;
-		    } */
+                return true;
+            } 
 
-		    // Função para validar Senha
-		    function isValidPassword(password) {
-		        const minLength = 6;
-		        const hasUpperCase = /[A-Z]/.test(password);
-		        const hasLowerCase = /[a-z]/.test(password);
-		        const hasDigit = /\d/.test(password);
-		        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            // Função para validar Senha
+            function isValidPassword(password) {
+                const minLength = 6;
+                const hasUpperCase = /[A-Z]/.test(password);
+                const hasLowerCase = /[a-z]/.test(password);
+                const hasDigit = /\d/.test(password);
+                const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
 
-		        return password.length >= minLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
-		    }
-		});
-
+                return password.length >= minLength && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
+            }
+        });
     </script>
 </body>
 

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gerenciamento de Clientes - Concessionária</title>
+	<!-- Bootstrap CSS online -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<!-- FontAwesome for icons -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+	<!-- Custom CSS -->
+	<style>
+		body {
+			background-color: #f8f9fa;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			padding: 20px;
+		}
+
+		.table th,
+		.table td {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		.btn-custom {
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 20px;
+			transition: background-color 0.3s ease;
+		}
+
+		.btn-custom:hover {
+			background-color: #0056b3;
+		}
+
+		.table-header {
+			background-color: #007bff;
+			color: white;
+			font-weight: bold;
+		}
+
+		.card {
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.form-inline {
+			margin-bottom: 20px;
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+		}
+
+		.form-inline input {
+			margin-right: 10px;
+			border-radius: 20px;
+		}
+
+		.form-inline button {
+			border-radius: 20px;
+		}
+
+		.pagination {
+			justify-content: center;
+		}
+
+		.send-icons {
+			font-size: 1.5rem;
+			cursor: pointer;
+			margin: 0 10px;
+			transition: color 0.3s ease;
+		}
+
+		.whatsapp {
+			color: #25D366;
+			/* Green */
+		}
+
+		.whatsapp:hover {
+			color: #1EBEA5;
+		}
+
+		.email {
+			color: #007BFF;
+			/* Blue */
+		}
+
+		.email:hover {
+			color: #0056b3;
+		}
+
+		@media (max-width: 767px) {
+			.form-inline {
+				flex-direction: column;
+			}
+
+			.form-inline input {
+				width: 100%;
+				margin-bottom: 10px;
+			}
+
+			.form-inline button {
+				width: 100%;
+			}
+		}
+
+		@media (max-width: 576px) {
+
+			.table th,
+			.table td {
+				display: block;
+				width: 100%;
+				box-sizing: border-box;
+				text-align: left;
+			}
+
+			.table td {
+				position: relative;
+				padding-left: 50%;
+			}
+
+			.table td::before {
+				content: attr(data-label);
+				position: absolute;
+				left: 0;
+				width: 45%;
+				padding-left: 10px;
+				white-space: nowrap;
+				font-weight: bold;
+				background: #f8f9fa;
+				border-right: 1px solid #dee2e6;
+			}
+		}
+
+		.page-title {
+			font-size: 1.75rem;
+			font-weight: bold;
+			color: #007bff;
+			border-bottom: 2px solid #007bff;
+			padding-bottom: 10px;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="page-title">Gerenciamento de Clientes</h1>
+		<!-- Botão de Retorno ao Dashboard -->
+		<a href="/dashboard" class="btn btn-primary mb-4">
+			<i class="fas fa-arrow-left"></i> Voltar para o Dashboard
+		</a>
+		<div class="card">
+			<div class="card-body">
+				<!-- Filtro de busca -->
+				<div class="form-inline mb-4">
+					<input id="searchInput" class="form-control" type="search"
+						placeholder="Pesquisar por nome, email ou celular" aria-label="Pesquisar">
+					<button class="btn btn-custom" type="button" id="searchButton" aria-label="Buscar">
+						<i class="fa fa-search"></i> Buscar
+					</button>
+				</div>
+
+				<!-- Tabela de clientes -->
+				<div class="table-responsive">
+					<table id="clientTable" class="table table-striped">
+						<thead class="table-header">
+							<tr>
+								<th>#</th>
+								<th onclick="sortTable(1)">Nome <i class="fa fa-sort"></i></th>
+								<th onclick="sortTable(2)">Email <i class="fa fa-sort"></i></th>
+								<th onclick="sortTable(3)">Celular <i class="fa fa-sort"></i></th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Dados de clientes -->
+							<tr>
+								<td>1</td>
+								<td data-label="Nome">João Silva</td>
+								<td data-label="Email">joao.silva@example.com</td>
+								<td data-label="Celular">(11) 98765-4321</td>
+								<td>
+									<a href="https://api.whatsapp.com/send?phone=5511987654321"
+										class="send-icons whatsapp" target="_blank" aria-label="Enviar pelo WhatsApp">
+										<i class="fab fa-whatsapp"></i>
+									</a>
+									<a href="mailto:joao.silva@example.com" class="send-icons email"
+										aria-label="Enviar por Email">
+										<i class="fas fa-envelope"></i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td data-label="Nome">Maria Oliveira</td>
+								<td data-label="Email">maria.oliveira@example.com</td>
+								<td data-label="Celular">(21) 91234-5678</td>
+								<td>
+									<a href="https://api.whatsapp.com/send?phone=5521912345678"
+										class="send-icons whatsapp" target="_blank" aria-label="Enviar pelo WhatsApp">
+										<i class="fab fa-whatsapp"></i>
+									</a>
+									<a href="mailto:maria.oliveira@example.com" class="send-icons email"
+										aria-label="Enviar por Email">
+										<i class="fas fa-envelope"></i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td data-label="Nome">Carlos Souza</td>
+								<td data-label="Email">carlos.souza@example.com</td>
+								<td data-label="Celular">(31) 99876-5432</td>
+								<td>
+									<a href="https://api.whatsapp.com/send?phone=5531998765432"
+										class="send-icons whatsapp" target="_blank" aria-label="Enviar pelo WhatsApp">
+										<i class="fab fa-whatsapp"></i>
+									</a>
+									<a href="mailto:carlos.souza@example.com" class="send-icons email"
+										aria-label="Enviar por Email">
+										<i class="fas fa-envelope"></i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td data-label="Nome">Jonas Santos</td>
+								<td data-label="Email">jonas.santos@example.com</td>
+								<td data-label="Celular">(41) 98765-4321</td>
+								<td>
+									<a href="https://api.whatsapp.com/send?phone=5541987654321"
+										class="send-icons whatsapp" target="_blank" aria-label="Enviar pelo WhatsApp">
+										<i class="fab fa-whatsapp"></i>
+									</a>
+									<a href="mailto:jonas.santos@example.com" class="send-icons email"
+										aria-label="Enviar por Email">
+										<i class="fas fa-envelope"></i>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td data-label="Nome">Junior Costa</td>
+								<td data-label="Email">junior.costa@example.com</td>
+								<td data-label="Celular">(51) 91234-5678</td>
+								<td>
+									<a href="https://api.whatsapp.com/send?phone=5551912345678"
+										class="send-icons whatsapp" target="_blank" aria-label="Enviar pelo WhatsApp">
+										<i class="fab fa-whatsapp"></i>
+									</a>
+									<a href="mailto:junior.costa@example.com" class="send-icons email"
+										aria-label="Enviar por Email">
+										<i class="fas fa-envelope"></i>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Paginação -->
+				<nav aria-label="Page navigation">
+					<ul class="pagination">
+						<li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#">Próxima</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!-- Custom JS -->
+	<script>
+		// Função de busca
+		document.getElementById('searchButton').addEventListener('click', function () {
+			const query = document.getElementById('searchInput').value.toLowerCase();
+			const rows = document.querySelectorAll('#clientTable tbody tr');
+			rows.forEach(row => {
+				const cells = row.getElementsByTagName('td');
+				let match = false;
+				for (let i = 1; i < cells.length - 1; i++) {
+					if (cells[i].innerText.toLowerCase().includes(query)) {
+						match = true;
+						break;
+					}
+				}
+				row.style.display = match ? '' : 'none';
+			});
+		});
+
+		// Função de ordenação
+		function sortTable(n) {
+			const table = document.getElementById('clientTable');
+			const rows = Array.from(table.querySelectorAll('tbody tr'));
+			const isAsc = table.getAttribute('data-sort') === 'asc';
+			rows.sort((a, b) => {
+				const aText = a.children[n].innerText.toLowerCase();
+				const bText = b.children[n].innerText.toLowerCase();
+				return isAsc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+			});
+			table.querySelector('tbody').append(...rows);
+			table.setAttribute('data-sort', isAsc ? 'desc' : 'asc');
+		}
+	</script>
+</body>
+
+</html>
