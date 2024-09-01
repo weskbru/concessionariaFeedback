@@ -1,4 +1,4 @@
-function validateInput(input) {
+/*function validateInput(input) {
             input.value = input.value.replace(/\D/g, '').slice(0, 11);
         }
 
@@ -17,4 +17,4 @@ function validateInput(input) {
             if (!/^\d$/.test(e.key) || this.value.length >= 11) {
                 e.preventDefault();
             }
-        });
+        });*/

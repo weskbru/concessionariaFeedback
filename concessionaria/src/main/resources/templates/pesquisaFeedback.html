@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pesquisa de Satisfação</title>
+	<!-- Inclua seu CSS e bibliotecas aqui -->
+</head>
+
+<body>
+	<div class="form-container">
+		<header class="form-header">
+			<h1>Avaliação de Atendimento ao Cliente</h1>
+			<p>Por favor, dedique um momento para preencher esta avaliação.</p>
+		</header>
+		<form>
+			<div class="form-group">
+				<label for="full_name">Nome Completo</label>
+				<input type="text" id="full_name" name="full_name" placeholder="Nome Completo" required>
+			</div>
+			<div class="form-group">
+				<label for="phone">Telefone</label>
+				<input type="tel" id="phone" name="phone" placeholder="(00) 0000-0000" required>
+			</div>
+			<div class="form-group">
+				<label for="service_rating_simpatia">Cordialidade e Simpatia</label>
+				<div id="service_rating_simpatia" class="star-rating">
+					<input type="radio" id="star5-simpatia" name="rating_simpatia" value="5">
+					<label for="star5-simpatia" title="5 estrelas">&#9733;</label>
+					<input type="radio" id="star4-simpatia" name="rating_simpatia" value="4">
+					<label for="star4-simpatia" title="4 estrelas">&#9733;</label>
+					<input type="radio" id="star3-simpatia" name="rating_simpatia" value="3">
+					<label for="star3-simpatia" title="3 estrelas">&#9733;</label>
+					<input type="radio" id="star2-simpatia" name="rating_simpatia" value="2">
+					<label for="star2-simpatia" title="2 estrelas">&#9733;</label>
+					<input type="radio" id="star1-simpatia" name="rating_simpatia" value="1">
+					<label for="star1-simpatia" title="1 estrela">&#9733;</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="service_rating_rapidez">Eficiência e Rapidez:</label>
+				<div id="service_rating_rapidez" class="star-rating">
+					<input type="radio" id="star5-rapidez" name="rating_rapidez" value="5">
+					<label for="star5-rapidez" title="5 estrelas">&#9733;</label>
+					<input type="radio" id="star4-rapidez" name="rating_rapidez" value="4">
+					<label for="star4-rapidez" title="4 estrelas">&#9733;</label>
+					<input type="radio" id="star3-rapidez" name="rating_rapidez" value="3">
+					<label for="star3-rapidez" title="3 estrelas">&#9733;</label>
+					<input type="radio" id="star2-rapidez" name="rating_rapidez" value="2">
+					<label for="star2-rapidez" title="2 estrelas">&#9733;</label>
+					<input type="radio" id="star1-rapidez" name="rating_rapidez" value="1">
+					<label for="star1-rapidez" title="1 estrela">&#9733;</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="service_rating_comunicacao">Conhecimento e Competência</label>
+				<div id="service_rating_comunicacao" class="star-rating">
+					<input type="radio" id="star5-comunicacao" name="rating_comunicacao" value="5">
+					<label for="star5-comunicacao" title="5 estrelas">&#9733;</label>
+					<input type="radio" id="star4-comunicacao" name="rating_comunicacao" value="4">
+					<label for="star4-comunicacao" title="4 estrelas">&#9733;</label>
+					<input type="radio" id="star3-comunicacao" name="rating_comunicacao" value="3">
+					<label for="star3-comunicacao" title="3 estrelas">&#9733;</label>
+					<input type="radio" id="star2-comunicacao" name="rating_comunicacao" value="2">
+					<label for="star2-comunicacao" title="2 estrelas">&#9733;</label>
+					<input type="radio" id="star1-comunicacao" name="rating_comunicacao" value="1">
+					<label for="star1-comunicacao" title="1 estrela">&#9733;</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="improvement">Como podemos melhorar nosso atendimento?</label>
+				<textarea id="improvement" name="improvement" rows="5"
+					placeholder="Deixe seu comentário aqui..."></textarea>
+			</div>
+			<div class="form-submit">
+				<button type="submit">Enviar Avaliação</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const starRatings = document.querySelectorAll('.star-rating');
+
+			starRatings.forEach(rating => {
+				rating.addEventListener('click', function (e) {
+					if (e.target.closest('.star')) {
+						const stars = rating.querySelectorAll('.star');
+						stars.forEach(star => {
+							star.classList.remove('selected');
+							star.querySelector('svg').style.color = '#cccccc'; // Cor cinza para todas as estrelas
+						});
+						const selectedStar = e.target.closest('.star');
+						selectedStar.classList.add('selected');
+						selectedStar.querySelector('svg').style.color = '#ffd700'; // Cor amarela para a estrela selecionada
+
+						// Set the hidden input value to the selected rating
+						const ratingValue = selectedStar.getAttribute('data-rating');
+						rating.parentElement.querySelector('input[type="hidden"]').value = ratingValue;
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

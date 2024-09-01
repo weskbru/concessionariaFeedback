@@ -19,6 +19,12 @@ public class ConsultorServiceImpl implements ConsultorService {
 
     @Override
     public Consultor salvarConsultor(Consultor consultor) {
+    	// Verifica se o CPF já existe antes de salvar
+    	System.out.println("Verificando se o CPF já existe: " + consultor.getCpf());
+        if (cpfExiste(consultor.getCpf())) {
+        	System.out.println("CPF já cadastrado: " + consultor.getCpf()); // Log para depuração
+            throw new IllegalArgumentException("CPF já cadastrado");
+        }
         // Criptografa a senha antes de salvar
         consultor.setSenha(passwordEncoder.encode(consultor.getSenha()));
         return consultorRepository.save(consultor);
