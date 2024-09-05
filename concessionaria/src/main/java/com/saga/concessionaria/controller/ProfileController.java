@@ -13,31 +13,30 @@ import com.saga.concessionaria.service.ConsultorService;
 
 @Controller
 public class ProfileController {
-	
+
 	@Autowired
 	private ConsultorService consultorService;
-	
-	
+
 	@GetMapping("/profile")
 	public String profile(Model model) {
-		
+
 		// Obtendo o nome do usuário logado
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String loggdIdUsername = "";
-		
-		if(authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+
+		if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			String cpf = userDetails.getUsername(); // suponha que o cpf é o nome do usuário
-			
+
 			// Busca o consultor pelo Cpf usuando o serviço
 			Consultor consultor = consultorService.findByCpf(cpf).orElse(null);
-			if(consultor != null) {
-				loggdIdUsername = consultor.getNome(); // Obtem o nome do consultor 
+			if (consultor != null) {
+				model.addAttribute("username", consultor.getNome());
+				model.addAttribute("email", consultor.getEmail());
+				model.addAttribute("telefone", consultor.getTelefone());
+
 			}
 		}
-		
-		// Adiciona o nome do usuário ao modelo 
-		model.addAttribute("username", loggdIdUsername);
+
 		return "profile";
 	}
 }
