@@ -36,6 +36,9 @@ public class Consultor {
     @Column(name = "senha", nullable = false)
     private String senha;
 
+    @Column(name = "telefone", nullable = false)
+    @NotBlank(message = "Telefone é obrigatório")
+    private String telefone;
     
 
     public Long getId() {
@@ -76,6 +79,14 @@ public class Consultor {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     
