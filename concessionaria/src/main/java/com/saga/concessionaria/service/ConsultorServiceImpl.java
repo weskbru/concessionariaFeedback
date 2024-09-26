@@ -5,6 +5,8 @@ import java.util.Optional;
 import com.saga.concessionaria.model.Consultor;
 import com.saga.concessionaria.repository.ConsultorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,4 +50,16 @@ public class ConsultorServiceImpl implements ConsultorService {
         }
         return Optional.empty();
     }
+    
+    @Override
+    public Consultor obterConsultorLogado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String cpf = authentication.getName(); // O CPF do consultor logado
+            Optional<Consultor> consultorOpt = consultorRepository.findByCpf(cpf);
+            return consultorOpt.orElse(null); // Retorna o consultor ou null se não encontrado
+        }
+        return null; // Retorna null se não estiver autenticado
+    }
+    
 }
