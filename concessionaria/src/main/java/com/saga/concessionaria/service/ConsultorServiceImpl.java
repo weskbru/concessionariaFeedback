@@ -95,4 +95,35 @@ public class ConsultorServiceImpl implements ConsultorService {
         }
         return null; // Retorna null se não estiver autenticado
     }
+    
+    // Método de atualização do consultor
+    @Override
+    public void atualizarConsultor(Consultor consultorAtualizado) {
+        Optional<Consultor> consultorExistenteOpt = consultorRepository.findById(consultorAtualizado.getId());
+        
+        if (consultorExistenteOpt.isPresent()) {
+            Consultor consultorExistente = consultorExistenteOpt.get();
+            
+            // Atualiza os campos que foram alterados
+            consultorExistente.setNome(consultorAtualizado.getNome());
+            consultorExistente.setEmail(consultorAtualizado.getEmail());
+            consultorExistente.setTelefone(consultorAtualizado.getTelefone());
+
+            // Verifica se uma nova senha foi fornecida
+            if (consultorAtualizado.getSenha() != null && !consultorAtualizado.getSenha().isEmpty()) {
+                // Criptografa a nova senha antes de salvar
+                consultorExistente.setSenha(passwordEncoder.encode(consultorAtualizado.getSenha()));
+            }
+
+            // Salva o consultor atualizado
+            consultorRepository.save(consultorExistente);
+        } else {
+            throw new IllegalArgumentException("Consultor não encontrado");
+        }
+    }
+
+
+
 }
+    
+

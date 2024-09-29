@@ -22,7 +22,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/login", "/cadastro", "/recuperaSenha", "/css/**").permitAll()
+                .requestMatchers("/login", "/cadastro", "/recuperaSenha","/update-profile", "/css/**").permitAll()
+                .requestMatchers("/update-profile").authenticated()
                 .requestMatchers("/dashboard").authenticated()
                 .anyRequest().authenticated()
             )
@@ -34,6 +35,7 @@ public class SecurityConfig {
             .logout(logout -> logout
                 .permitAll()
             )
+            
             .userDetailsService(userDetailsService);
         
         return http.build();
