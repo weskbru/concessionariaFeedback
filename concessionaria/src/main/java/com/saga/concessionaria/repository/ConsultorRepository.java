@@ -15,6 +15,6 @@ public interface ConsultorRepository extends JpaRepository<Consultor, Long> {
 
 	Optional<Consultor>findByCpf(String cpf); 
 
-	/* Optional<Consultor> findByCpfAndSenha(String cpf); */
+	
 
 }
