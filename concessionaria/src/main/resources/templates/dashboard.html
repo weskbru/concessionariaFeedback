@@ -11,6 +11,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+	
 </head>
 
 <body class="sb-nav-fixed">
@@ -55,56 +56,56 @@
 		<div id="layoutSidenav_nav">
 			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
-				    <div class="nav">
-				        <div class="sb-sidenav-menu-heading">Core</div>
-				        <a class="nav-link" href="index.html">
-				            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-				            Dashboard
-				        </a>
+					<div class="nav">
+						<div class="sb-sidenav-menu-heading">Core</div>
+						<a class="nav-link" href="index.html">
+							<div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+							Dashboard
+						</a>
 
-				        <div class="sb-sidenav-menu-heading">Interface</div>
+						<div class="sb-sidenav-menu-heading">Interface</div>
 
-				        <!-- Relatórios de Notas -->
-				        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-				           data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
-				            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-				            Relatórios de Notas
-				            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-				        </a>
-				        <div class="collapse" id="collapseReports" aria-labelledby="headingReports"
-				             data-bs-parent="#sidenavAccordion">
-				            <nav class="sb-sidenav-menu-nested nav">
-				                <a class="nav-link" href="reports.html">Notas dos Clientes</a>
-				            </nav>
-				        </div>
+						<!-- Relatórios de Notas -->
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
+							<div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+							Relatórios de Notas
+							<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+						</a>
+						<div class="collapse" id="collapseReports" aria-labelledby="headingReports"
+							data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" th:href="@{/details}">Notas dos Clientes</a>
+							</nav>
+						</div>
 
-				        <!-- Feedbacks Recebidos -->
-				        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-				           data-bs-target="#collapseFeedbacks" aria-expanded="false" aria-controls="collapseFeedbacks">
-				            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-				            Feedbacks Recebidos
-				            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-				        </a>
-				        <div class="collapse" id="collapseFeedbacks" aria-labelledby="headingFeedbacks"
-				             data-bs-parent="#sidenavAccordion">
-				            <nav class="sb-sidenav-menu-nested nav">
-				                <a class="nav-link" href="feedbacks.html">Visualizar Feedbacks</a>
-				                <a class="nav-link" href="respond-feedbacks.html">Responder Feedbacks</a>
-				            </nav>
-				        </div>
+						<!-- Feedbacks Recebidos -->
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseFeedbacks" aria-expanded="false" aria-controls="collapseFeedbacks">
+							<div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+							Feedbacks Recebidos
+							<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+						</a>
+						<div class="collapse" id="collapseFeedbacks" aria-labelledby="headingFeedbacks"
+							data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="feedbacks.html">Visualizar Feedbacks</a>
+								<a class="nav-link" href="respond-feedbacks.html">Responder Feedbacks</a>
+							</nav>
+						</div>
 
-				        <!-- Enviar Feedbacks -->
-				        <a class="nav-link" th:href="@{/clientes}">
-				            <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
-				            Enviar Pesquisar
-				        </a>
+						<!-- Enviar Feedbacks -->
+						<a class="nav-link" th:href="@{/clientes}">
+							<div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>
+							Enviar Pesquisar
+						</a>
 
-				        <div class="sb-sidenav-menu-heading">Addons</div>
-				        <a class="nav-link" href="charts.html">
-				            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-				            Gráficos
-				        </a>
-				    </div>
+						<div class="sb-sidenav-menu-heading">Addons</div>
+						<a class="nav-link" href="charts.html">
+							<div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+							Gráficos
+						</a>
+					</div>
 				</div>
 
 				<div class="sb-sidenav-footer">
@@ -116,43 +117,44 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-					<ol class="breadcrumb mb-4">
-						<li class="breadcrumb-item active">Dashboard</li>
-					</ol>
+
+					<p class="breadcrumb-item active"></p>
+
+					<!-- Seção de KPIs -->
 					<div class="row">
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-primary text-white mb-4">
-								<div class="card-body">Quantidade Total de Pesquisas</div>
-								<div class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View Details</a>
-									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+						<div class="col-lg-3 col-md-6">
+							<div class="card card-kpi shadow-sm animate__animated animate__fadeIn">
+								<div class="card-body text-center">
+									<i class="fas fa-users kpi-icon"></i>
+									<div class="kpi-value">120</div>
+									<div class="kpi-label">Atendimentos no Mês</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-warning text-white mb-4">
-								<div class="card-body">Notas Medianas</div>
-								<div class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View Details</a>
-									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+						<div class="col-lg-3 col-md-6">
+							<div class="card card-kpi shadow-sm animate__animated animate__fadeIn">
+								<div class="card-body text-center">
+									<i class="fas fa-smile kpi-icon"></i>
+									<div class="kpi-value">85%</div>
+									<div class="kpi-label">Satisfação do Cliente</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-success text-white mb-4">
-								<div class="card-body">Notas Boas</div>
-								<div class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View Details</a>
-									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+						<div class="col-lg-3 col-md-6">
+							<div class="card card-kpi shadow-sm animate__animated animate__fadeIn">
+								<div class="card-body text-center">
+									<i class="fas fa-sync-alt kpi-icon"></i>
+									<div class="kpi-value">65%</div>
+									<div class="kpi-label">Taxa de Pesquisas Enviadas</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-3 col-md-6">
-							<div class="card bg-danger text-white mb-4">
-								<div class="card-body">Notas Ruins</div>
-								<div class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View Details</a>
-									<div class="small text-white"><i class="fas fa-angle-right"></i></div>
+						<div class="col-lg-3 col-md-6">
+							<div class="card card-kpi shadow-sm animate__animated animate__fadeIn">
+								<div class="card-body text-center">
+									<i class="fas fa-clock kpi-icon"></i>
+									<div class="kpi-value">2.5h</div>
+									<div class="kpi-label">Tempo Médio de Resolução</div>
 								</div>
 							</div>
 						</div>
